@@ -1,4 +1,4 @@
-package com.example.jerryyin.mybobmdemo;
+package com.example.jerryyin.mybobmdemo.Views;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jerryyin.mybobmdemo.R;
 import com.example.jerryyin.mybobmdemo.model.Student;
 
 import org.json.JSONArray;
