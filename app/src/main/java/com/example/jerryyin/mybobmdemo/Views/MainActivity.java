@@ -2,6 +2,8 @@ package com.example.jerryyin.mybobmdemo.Views;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jerryyin.mybobmdemo.R;
+import com.example.jerryyin.mybobmdemo.model.MyUser;
 import com.example.jerryyin.mybobmdemo.model.Student;
 
 import org.json.JSONArray;
@@ -16,6 +19,7 @@ import org.json.JSONObject;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindCallback;
 import cn.bmob.v3.listener.GetCallback;
@@ -26,8 +30,11 @@ import cn.bmob.v3.listener.UpdateListener;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
+    /**Constant*/
     private static final String APPLICATION_ID = "6e2a924f0e2256b5fe08cebfd3904dae";
+    private static final int MENU_ITEM_LOGOUT_ID = 0;
 
+    /**Views*/
     private Button mbtnAdd;
     private Button mbtnQuery;
     private Button mbtnUpdate;
@@ -41,7 +48,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         setupView();
-        initBmobSdk();
+//        initBmobSdk();
     }
 
     private void setupView() {
@@ -170,5 +177,32 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.add(Menu.NONE, Menu.FIRST+1, 0, "LogOut").setIcon(R.drawable.ic_highlight_off_black_24dp);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case Menu.FIRST+1:
+                logOut();
+                this.finish();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    /**
+     * 退出登录，清除本地缓存的用户信息
+     */
+    private void logOut() {
+        MyUser.logOut(this);
+        MyUser currentUser = BmobUser.getCurrentUser(this, MyUser.class);
+    }
 }
